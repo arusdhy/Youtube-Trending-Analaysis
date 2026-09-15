@@ -1,52 +1,40 @@
-# Exploring Trending YouTube Engagement
+# YouTube Engagement Trend Analysis
 
-An exploratory data analysis (EDA) project that investigates engagement patterns across trending YouTube videos using over 200,000 engagement snapshots.
+## What this project is / what it gives you
 
-The project focuses on understanding how audience interactions such as views, likes, comments, and dislikes relate to one another and how engagement changes across trending content.
+A beginner-level EDA and visualization project exploring engagement on trending YouTube videos: 200,000 daily stat snapshots of ~11,000 trending videos, covering views, likes, dislikes, and comments over time.
 
-This project demonstrates practical data cleaning, exploratory analysis, statistical summaries, and data visualization using Python.
+This project gives you a clear picture of how engagement behaves on trending content. It is not a predictive model — it is an exploratory analysis focused on insight, visualizations, and reproducible notebooks.
 
-## Problem Statement
-
-Trending videos receive millions of interactions every day, but not every form of engagement grows at the same rate.
-
-This project explores:
-
-- How views influence likes and comments
-- Which engagement metrics are most strongly correlated
-- Overall audience sentiment through like ratios
-- Distribution of engagement metrics
-- Characteristics of highly-engaged trending videos
-
-The goal is to identify meaningful patterns through exploratory data analysis rather than predictive modelling.
+I also added a **view-velocity** section, which looks at how quickly videos accumulate views between snapshots, not just their total counts. This makes the project more time-aware and less like a standard summary-statistics EDA.
 
 ## Dataset
+- Source: Trending YouTube time-series, subsampled to 200,000 snapshots.
+- Columns: `videostatsid`, `ytvideoid`, `views`, `comments`, `likes`, `dislikes`, `timestamp`.
+- Dataset note: the checklist’s `datasnaek` YouTube CSV is no longer hosted, so this openly available time-series version is used instead. It carries engagement metrics over time rather than title/category metadata, so the analysis focuses on engagement dynamics.
+  
+## What answers it gives / key findings
+Scale: 200,000 snapshots across ~11,160 trending videos, with a mean of ~2.3M views and ~114k likes per snapshot.
 
-Source:
-Trending YouTube engagement time-series dataset (Hugging Face)
+Engagement scales together: views correlate 0.84 with likes and 0.68 with comments. A trending video that gets views generally gets proportional likes and comments.
 
-Dataset contains approximately:
+Audiences are overwhelmingly positive: the median like ratio is 0.976, dislikes are rare on trending content.
 
-- 200,000 engagement snapshots
-- 11,000+ unique trending videos
+Heavy right skew: all engagement metrics are heavily skewed. A few mega-viral videos dominate, which is why log scales are used in the distributions.
 
-Features include:
-
-- Video ID
-- View count
-- Like count
-- Dislike count
-- Comment count
-- Timestamp
-
-Unlike traditional YouTube datasets containing categories or titles, this dataset captures engagement metrics over time, making it suitable for analysing engagement dynamics.
+View velocity extension: between consecutive snapshots, the median view growth is about 7323 views/hour, while the 90th percentile is about 49971 views/hour. A small set of videos grow much faster, reinforcing the bursty nature of trending content.
 
 ## Technologies Used
-
 - Python
-- Pandas
-- NumPy
-- Matplotlib
-- Seaborn
 - Jupyter Notebook
+- pandas-data loading, cleaning, grouping, time-based features
+- NumPy-numeric operations and log transforms
+- Matplotlib-histograms, scatter plots, bar charts
+- Seaborn-correlation heatmap and statistical visualization
+- Git / GitHub-version control and project hosting
 
+## What else could be added to improve the project / get more key insights
+- Build a simple view-growth forecasting or trend-detection model using the timestamp snapshots.
+- Add video metadata such as title, category, channel, and publish time to compare engagement by category, channel size, and upload age.
+
+- 
