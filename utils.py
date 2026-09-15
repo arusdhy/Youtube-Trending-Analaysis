@@ -24,3 +24,16 @@ def top_counts(series, n=10, sep=None):
     if sep:
         s = s.str.split(sep).explode().str.strip()
     return s.value_counts().head(n) #Return the top N most common values
+
+#How fast each trending video accumulates views between snapshots
+def add_view_velocity(df, time_col="timestamp", video_col="ytvideoid", views_col="views"):
+    out = df.copy() #Work on a copy so the original DataFrame is not changed
+    out[time_col] = pd.to_datetime(out[time_col], errors="coerce") #Convert timestamp to datetime; invalid values become NaT
+    out = out.sort_values([video_col, time_col]) #Sort by video then time so consecutive rows are in order
+
+    grouped = out.groupby(video_col, sort=False) #Group by video to calculate changes within each video
+    out["hours_since_prev"] = grouped[time_col].diff().dt.total_seconds() / 3600 #Hours since the previous snapshot for that video
+    out["views_delta"] = grouped[views_col].diff() #Change in views since the previous snapshot for that video
+    out["views_per_hour"] = out["views_delta"] / out["hours_since_prev"] #View velocity: views gained per hour
+
+    return out #Return DataFrame with three new velocity columns
