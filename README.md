@@ -37,4 +37,4 @@ View velocity extension: between consecutive snapshots, the median view growth i
 - Build a simple view-growth forecasting or trend-detection model using the timestamp snapshots.
 - Add video metadata such as title, category, channel, and publish time to compare engagement by category, channel size, and upload age.
 
-- 
+
